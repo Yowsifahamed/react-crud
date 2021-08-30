@@ -4,44 +4,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 class Dialog extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            status: true
-        }
 
-    }
+    closeCustomModal = e => {
+        this.props.onCloseModal(e);
+    };
+
     render() {
-        if (this.props.dialogStatus) {
-            return (
-                <section>
-                    <div className="dialog-content container">
-                        <h3 className="update-heading">Update </h3>
-                        <span className="cross-icon"> <FontAwesomeIcon icon={faTimes} /> </span>
-                        <form>
-                            <div className="form-group">
-                                <label for="exampleInputEmail1" className="input-lable">Email address</label>
-                                <input type="email" className="form-control input-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-                            </div>
-                            <div className="form-group">
-                                <label for="exampleInputPassword1" className="input-lable">Password</label>
-                                <input type="password" className="form-control input-control" id="exampleInputPassword1" placeholder="Password" />
-                            </div>
-                            <button type="submit" className="btn btn-primary submit-btn">Submit</button>
-                        </form>
-                    </div>
-                    <div className="black-drop"></div>
-                </section>
-            );
-        } else {
-            return (
-                <div> Test false
-
+        return (
+            <section>
+                <div className="dialog-content container">
+                    <h3 className="update-heading">Update </h3>
+                    <span className="cross-icon" onClick={this.closeCustomModal}> <FontAwesomeIcon icon={faTimes} /> </span>
+                    <form>
+                        <div className="form-group">
+                            <label for="exampleInputEmail1" className="input-lable">Email address</label>
+                            <input type="email" className="form-control input-control" id="exampleInputEmail1" placeholder="Enter email" />
+                        </div>
+                        <div className="form-group">
+                            <label for="exampleInputPassword1" className="input-lable">Password</label>
+                            <input type="password" className="form-control input-control" id="exampleInputPassword1" placeholder="Password" />
+                        </div>
+                        <button type="submit" className="btn btn-primary submit-btn">Submit</button>
+                    </form>
                 </div>
-            );
-        }
-
+                <div className="black-drop"></div>
+            </section>
+        );
     }
+
 }
 
 export default Dialog;

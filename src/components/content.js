@@ -2,18 +2,23 @@ import React, { Component } from 'react';
 import Dialog from './dialog/records-dialog'
 
 class Content extends Component {
-    constructor(props) {
-        super(props)
-
+    constructor() {
+        super();
         this.state = {
-            status: true
-        }
+            showModal: false
+        };
+    }
+
+    showModal = (e) => {
+        this.setState(prevState => ({
+            showModal: !prevState.showModal
+        }));
     }
 
     render() {
         return (
             <div className="container content">
-                <button className="btn btn-primary" type="button" onClick={() => this.openModal()}>
+                <button className="btn btn-primary" type="button" onClick={this.showModal}>
                     Add record
                 </button>
                 <form>
@@ -48,13 +53,10 @@ class Content extends Component {
                         </tbody>
                     </table>
                 </form>
-                <Dialog dialogStatus={this.state.status} />
+                {this.state.showModal && <Dialog onCloseModal={this.showModal} />}
+
             </div>
         );
-    }
-
-    openModal() {
-
     }
 }
 
