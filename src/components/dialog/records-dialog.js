@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import "./records-dialog.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 class Dialog extends Component {
     constructor(props) {
@@ -12,9 +14,24 @@ class Dialog extends Component {
     render() {
         if (this.props.dialogStatus) {
             return (
-                <div className="dialog-content">
-                    Test
-                </div>
+                <section>
+                    <div className="dialog-content container">
+                        <h3 className="update-heading">Update </h3>
+                        <span className="cross-icon"> <FontAwesomeIcon icon={faTimes} /> </span>
+                        <form>
+                            <div className="form-group">
+                                <label for="exampleInputEmail1" className="input-lable">Email address</label>
+                                <input type="email" className="form-control input-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                            </div>
+                            <div className="form-group">
+                                <label for="exampleInputPassword1" className="input-lable">Password</label>
+                                <input type="password" className="form-control input-control" id="exampleInputPassword1" placeholder="Password" />
+                            </div>
+                            <button type="submit" className="btn btn-primary submit-btn">Submit</button>
+                        </form>
+                    </div>
+                    <div className="black-drop"></div>
+                </section>
             );
         } else {
             return (
