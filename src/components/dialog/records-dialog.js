@@ -3,6 +3,7 @@ import "./records-dialog.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
+
 class Dialog extends Component {
 
     constructor(props) {
