@@ -9,6 +9,7 @@ class Content extends Component {
         super();
         this.state = {
             showModal: false,
+            selectedValue: {},
             table: [
                 { id: 1, name: 'Sajith', address: 'Hudaif', Company: 'ABCD' },
                 { id: 2, name: 'Afrad', address: 'Colombo', Company: 'ABCD' },
@@ -59,8 +60,8 @@ class Content extends Component {
                                         <td className="table-data">{res.name}</td>
                                         <td className="table-data">{res.address}</td>
                                         <td className="table-data">{res.Company}</td>
-                                        <td className="table-data"><FontAwesomeIcon icon={faEdit} /></td>
-                                        <td className="table-data"><FontAwesomeIcon icon={faTrashAlt} /></td>
+                                        <td className="table-data" onClick={() => this.editRecord(res)}><FontAwesomeIcon icon={faEdit} /></td>
+                                        <td className="table-data" onClick={() => this.deleteRecord(res.id)} > <FontAwesomeIcon icon={faTrashAlt} /></td>
                                     </tr>
                                 )
                             }
@@ -69,9 +70,23 @@ class Content extends Component {
                     </table>
                 </form>
                 {this.state.showModal && <Dialog onCloseModal={this.showModal} />}
-
             </div>
         );
+    }
+
+    editRecord(res) {
+        this.setState({ selectedValue: res });
+        console.log(this.state);
+    }
+
+    deleteRecord(id) {
+        let tableObject = [...this.state.table];
+        tableObject.forEach((res, index) => {
+            if (res.id == id) {
+                tableObject.splice(index, 1);
+                this.setState({ table: tableObject });
+            }
+        })
     }
 }
 
