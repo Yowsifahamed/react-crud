@@ -11,7 +11,7 @@ class Content extends Component {
             showModal: false,
             selectedValue: {},
             table: [
-                { id: 1, name: 'Sajith', address: 'Hudaif', Company: 'ABCD' },
+                { id: 1, name: 'Sajith', address: 'Colombo', Company: 'ABCD' },
                 { id: 2, name: 'Afrad', address: 'Colombo', Company: 'ABCD' },
                 { id: 3, name: 'Arafath', address: 'Colombo', Company: 'ABCD' },
                 { id: 4, name: 'Rilwan', address: 'Colombo', Company: 'ABCD' },
@@ -20,7 +20,7 @@ class Content extends Component {
         };
     }
 
-    showModal = (e) => {
+    showModal = (e, name, address, company) => {
         this.setState(prevState => ({
             showModal: !prevState.showModal
         }));
@@ -69,14 +69,42 @@ class Content extends Component {
                         </tbody>
                     </table>
                 </form>
-                {this.state.showModal && <Dialog onCloseModal={this.showModal} />}
+                {this.state.showModal &&
+                    <Dialog
+                        onCloseModal={this.addRecords}
+                        editRecord={this.state.selectedValue}
+                    />
+                }
             </div>
         );
     }
 
+    addRecords = (e, name, address, company) => {
+        this.setState(prevState => ({
+            showModal: e
+        }));
+
+        this.setState({ selectedValue: {} });
+
+        if (name != "" && address != "" && company != "") {
+            let tableObject = [...this.state.table];
+            tableObject.push({
+                id: this.state.table.length + 1,
+                name: name,
+                address: address,
+                Company: company
+            });
+
+            this.setState({ table: tableObject });
+        }
+    }
+
     editRecord(res) {
+        this.setState(prevState => ({
+            showModal: true
+        }));
+
         this.setState({ selectedValue: res });
-        console.log(this.state);
     }
 
     deleteRecord(id) {

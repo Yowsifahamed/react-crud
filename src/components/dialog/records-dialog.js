@@ -8,10 +8,13 @@ class Dialog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            name: "1",
-            address: "2"
-        };
+
+        if (props.editRecord.name != "" && props.editRecord.address != "" && props.editRecord.company != "") {
+            this.state = { name: props.editRecord.name, address: props.editRecord.address, company: props.editRecord.Company };
+            console.log(this.state, "this.state");
+        } else {
+            this.state = { name: "", address: "", company: "" };
+        }
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,16 +23,21 @@ class Dialog extends Component {
     handleInputChange(event) {
         if (event.target.name == "name") {
             this.setState({ name: event.target.value });
-        } else if (event.target.name == "address") {
+        }
+        if (event.target.name == "address") {
             this.setState({ address: event.target.value });
+        }
+
+        if (event.target.name == "company") {
+            this.setState({ company: event.target.value });
         }
 
         console.log(this.state, "this.state");
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state);
         event.preventDefault();
+        this.props.onCloseModal(false, this.state.name, this.state.address, this.state.company)
     }
 
     closeCustomModal = e => {
@@ -53,6 +61,12 @@ class Dialog extends Component {
                             <label for="exampleInputPassword1" className="input-lable">Address</label>
                             <input type="text" name="address" className="form-control input-control" placeholder="Enter address"
                                 value={this.state.address}
+                                onChange={this.handleInputChange} />
+                        </div>
+                        <div className="form-group">
+                            <label for="exampleInputPassword1" className="input-lable">Address</label>
+                            <input type="text" name="company" className="form-control input-control" placeholder="Enter address"
+                                value={this.state.company}
                                 onChange={this.handleInputChange} />
                         </div>
                         <button type="submit" className="btn btn-primary submit-btn">Submit</button>
