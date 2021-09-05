@@ -20,7 +20,7 @@ class Content extends Component {
         };
     }
 
-    showModal = (e, name, address, company) => {
+    showModal = (status) => {
         this.setState(prevState => ({
             showModal: !prevState.showModal
         }));
@@ -71,31 +71,46 @@ class Content extends Component {
                 </form>
                 {this.state.showModal &&
                     <Dialog
-                        onCloseModal={this.addRecords}
+                        addingRecords={this.addRecords}
+                        modalStaus={this.showModal}
                         editRecord={this.state.selectedValue}
+                        recordSubmission={this.recordSubmission}
                     />
                 }
             </div>
         );
     }
 
-    addRecords = (e, name, address, company) => {
+    addRecords = (e, id, name, address, company) => {
         this.setState(prevState => ({
             showModal: e
         }));
 
         this.setState({ selectedValue: {} });
 
-        if (name != "" && address != "" && company != "") {
-            let tableObject = [...this.state.table];
-            tableObject.push({
-                id: this.state.table.length + 1,
-                name: name,
-                address: address,
-                Company: company
-            });
+        if (id == undefined) {
+            if (name != "" && address != "" && company != "") {
+                let tableObject = [...this.state.table];
+                tableObject.push({
+                    id: this.state.table.length + 1,
+                    name: name,
+                    address: address,
+                    Company: company
+                });
 
-            this.setState({ table: tableObject });
+                this.setState({ table: tableObject });
+            }
+        } else {
+            if (name != "" && address != "" && company != "") {
+                let tableObject = [...this.state.table];
+                tableObject.map(res => {
+                    if (res.id == id) {
+                        res.name = name;
+                        res.address = address;
+                        res.Company = company;
+                    }
+                })
+            }
         }
     }
 
@@ -115,6 +130,10 @@ class Content extends Component {
                 this.setState({ table: tableObject });
             }
         })
+    }
+
+    recordSubmission() {
+
     }
 }
 

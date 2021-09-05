@@ -10,14 +10,14 @@ class Dialog extends Component {
         super(props);
 
         if (props.editRecord.name != "" && props.editRecord.address != "" && props.editRecord.company != "") {
-            this.state = { name: props.editRecord.name, address: props.editRecord.address, company: props.editRecord.Company };
-            console.log(this.state, "this.state");
+            this.state = { id: props.editRecord.id, name: props.editRecord.name, address: props.editRecord.address, company: props.editRecord.Company };
         } else {
-            this.state = { name: "", address: "", company: "" };
+            this.state = { id: '', name: '', address: '', company: '', };
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.closeTheModal = this.closeTheModal.bind(this);
     }
 
     handleInputChange(event) {
@@ -31,25 +31,24 @@ class Dialog extends Component {
         if (event.target.name == "company") {
             this.setState({ company: event.target.value });
         }
-
-        console.log(this.state, "this.state");
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        this.props.onCloseModal(false, this.state.name, this.state.address, this.state.company)
+    handleSubmit() {
+        this.props.addingRecords(false, this.state.id, this.state.name, this.state.address, this.state.company)
     }
 
-    closeCustomModal = e => {
-        this.props.onCloseModal(e);
-    };
+    closeTheModal() {
+        this.setState({ id: null, name: null, address: null, company: null });
+        this.props.modalStaus(false)
+        console.log(this.state)
+    }
 
     render() {
         return (
             <section>
                 <div className="dialog-content container">
                     <h3 className="update-heading">Update </h3>
-                    <span className="cross-icon" onClick={this.closeCustomModal}> <FontAwesomeIcon icon={faTimes} /> </span>
+                    <span className="cross-icon" onClick={this.closeTheModal}> <FontAwesomeIcon icon={faTimes} /> </span>
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label for="exampleInputEmail1" className="input-lable">Name</label>
@@ -80,24 +79,3 @@ class Dialog extends Component {
 }
 
 export default Dialog;
-
-
-{/* <div className="modal fade" id="exampleModalCenter">
-<div className="modal-dialog modal-dialog-centered">
-    <div className="modal-content">
-        <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
-            <button type="button" className="close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div className="modal-body">
-            ...
-        </div>
-        <div className="modal-footer">
-            <button type="button" className="btn btn-secondary">Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
-        </div>
-    </div>
-</div>
-</div> */}
